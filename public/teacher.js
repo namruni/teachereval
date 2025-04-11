@@ -162,10 +162,48 @@ document.addEventListener('DOMContentLoaded', () => {
             // Create overall report content
             let reportHTML = '';
             
+            // Öğrenci sayısı 5'ten az ise güncel rapor yerine uyarı göster, ancak geçmiş raporları göstermeye devam et
+            const showCurrentReportWarning = evaluationCount < 5;
+            
+            if (showCurrentReportWarning) {
+                reportHTML = `<div class="minimum-evaluations-warning">
+                    <h3>Yetersiz Değerlendirme Sayısı</h3>
+                    <p>Güncel toplu değerlendirme raporu oluşturulamadı. En az 5 öğrenci değerlendirmesi gereklidir.</p>
+                    <p>Şu anda sadece ${evaluationCount} değerlendirme bulunmaktadır.</p>
+                    <p>5 değerlendirmeye ulaşıldığında güncel rapor otomatik olarak oluşturulacaktır.</p>
+                </div>`;
+                
+                // Puanı kaldır ya da sıfırla
+                const scoreDisplay = document.getElementById('overall-score-display');
+                if (scoreDisplay) {
+                    scoreDisplay.textContent = '--';
+                }
+            }
+            
             if (reportHistory.length > 0) {
-                // Add report history selector if there are multiple reports
+                // Add report history container
                 reportHTML += `<div class="report-history-container">`;
                 
+                // İlk raporu (güncel rapor) öğrenci sayısı 5'in altındaysa uyarı olarak, değilse normal göster
+                if (showCurrentReportWarning) {
+                    reportHTML += `
+                        <div class="minimum-evaluations-warning">
+                            <h3>Yetersiz Değerlendirme Sayısı</h3>
+                            <p>Güncel toplu değerlendirme raporu oluşturulamadı. En az 5 öğrenci değerlendirmesi gereklidir.</p>
+                            <p>Şu anda sadece ${evaluationCount} değerlendirme bulunmaktadır.</p>
+                            <p>5 değerlendirmeye ulaşıldığında güncel rapor otomatik olarak oluşturulacaktır.</p>
+                        </div>
+                    `;
+                    
+                    // Eğer sadece bir rapor varsa ve o da yetersiz sayıda öğrenci varsa, puanı kaldır
+                    if (reportHistory.length === 1) {
+                        overallScoreDisplay.textContent = '--';
+                    }
+                } else {
+                    reportHTML += `<div class="current-report">${reportHistory[0].report}</div>`;
+                }
+                
+                // Rapor geçmişi seçiciyi sadece birden fazla rapor varsa göster
                 if (reportHistory.length > 1) {
                     reportHTML += `
                         <div class="report-batch-info">
@@ -178,8 +216,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     reportHistory.forEach((report, index) => {
                         const date = new Date(report.timestamp).toLocaleDateString('tr-TR');
                         const time = new Date(report.timestamp).toLocaleTimeString('tr-TR');
-                        reportHTML += `<option value="${index}" ${index === reportHistory.length - 1 ? 'selected' : ''}>
-                            Rapor #${index + 1} - ${report.studentCount} Öğrenci (${date} ${time})
+                        
+                        // Eğer güncel rapor (index 0) ve öğrenci sayısı 5'in altındaysa bu raporu devre dışı bırak
+                        const disabledAttr = (index === 0 && showCurrentReportWarning) ? 'disabled' : '';
+                        const warningText = (index === 0 && showCurrentReportWarning) ? ' (Yetersiz Değerlendirme)' : '';
+                        
+                        // İlk rapor seçili olmamalı, en son rapor seçili olmalı
+                        const selectedAttr = (index === 0 && showCurrentReportWarning) ? '' : (index === reportHistory.length - 1 ? 'selected' : '');
+                        
+                        reportHTML += `<option value="${index}" ${disabledAttr} ${selectedAttr}>
+                            Rapor #${index + 1} - ${report.studentCount} Öğrenci${warningText} (${date} ${time})
                         </option>`;
                     });
                     
@@ -251,14 +297,27 @@ document.addEventListener('DOMContentLoaded', () => {
                         const selectedIndex = parseInt(e.target.value);
                         const selectedReport = reportHistory[selectedIndex];
                         
-                        // Update the displayed report
-                        document.querySelector('.current-report').innerHTML = selectedReport.report;
-                        
-                        // Update the score
-                        const scoreMatch = selectedReport.report.match(/(\d+)\/100|(\d+)\s*\/\s*100|(\d+)\s*puan/i);
-                        if (scoreMatch) {
-                            const score = scoreMatch[1] || scoreMatch[2] || scoreMatch[3];
-                            overallScoreDisplay.textContent = score;
+                        // Eğer seçilen rapor en son rapor (indeks 0) ve öğrenci sayısı 5'ten az ise uyarı göster
+                        if (selectedIndex === 0 && showCurrentReportWarning) {
+                            document.querySelector('.current-report').innerHTML = `<div class="minimum-evaluations-warning">
+                                <h3>Yetersiz Değerlendirme Sayısı</h3>
+                                <p>Güncel toplu değerlendirme raporu oluşturulamadı. En az 5 öğrenci değerlendirmesi gereklidir.</p>
+                                <p>Şu anda sadece ${evaluationCount} değerlendirme bulunmaktadır.</p>
+                                <p>5 değerlendirmeye ulaşıldığında güncel rapor otomatik olarak oluşturulacaktır.</p>
+                            </div>`;
+                            
+                            // Puanı kaldır
+                            overallScoreDisplay.textContent = '--';
+                        } else {
+                            // Update the displayed report
+                            document.querySelector('.current-report').innerHTML = selectedReport.report;
+                            
+                            // Update the score
+                            const scoreMatch = selectedReport.report.match(/(\d+)\/100|(\d+)\s*\/\s*100|(\d+)\s*puan/i);
+                            if (scoreMatch) {
+                                const score = scoreMatch[1] || scoreMatch[2] || scoreMatch[3];
+                                overallScoreDisplay.textContent = score;
+                            }
                         }
                     });
                 }
