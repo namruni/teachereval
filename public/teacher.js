@@ -144,6 +144,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const responseData = await response.json();
             const reportContent = responseData.report;
             const reportHistory = responseData.reportHistory || [];
+            const evaluationCount = responseData.evaluationCount || 0;
+            
+            // Update the evaluation count display
+            const evaluationCountElement = document.getElementById('evaluation-count');
+            if (evaluationCountElement) {
+                evaluationCountElement.textContent = evaluationCount;
+                
+                // Add visual indication if below threshold
+                if (evaluationCount < 5) {
+                    evaluationCountElement.classList.add('below-threshold');
+                } else {
+                    evaluationCountElement.classList.remove('below-threshold');
+                }
+            }
             
             // Create overall report content
             let reportHTML = '';
@@ -283,21 +297,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error('Değerlendirme silinirken bir hata oluştu.');
             }
             
+            // Get the updated information from the deletion response
+            const result = await response.json();
+            const remainingCount = result.remainingCount;
+            const belowThreshold = result.belowThreshold;
+            
+            // Update evaluation count display
+            const evaluationCountElement = document.getElementById('evaluation-count');
+            if (evaluationCountElement) {
+                evaluationCountElement.textContent = remainingCount;
+                
+                // Add visual indication if below threshold
+                if (belowThreshold) {
+                    evaluationCountElement.classList.add('below-threshold');
+                } else {
+                    evaluationCountElement.classList.remove('below-threshold');
+                }
+            }
+            
             // Remove from UI
             const evaluationItem = document.querySelector(`.evaluation-item[data-id="${evaluationId}"]`);
             if (evaluationItem) {
                 evaluationItem.remove();
             }
             
-            // Reload the overall report
+            // Reload the overall report - this will check for minimum 5 evaluations
             loadOverallReport();
             
             // Check if there are any evaluations left
-            if (document.querySelectorAll('.evaluation-item').length === 0) {
+            if (remainingCount === 0) {
                 evaluationListContainer.innerHTML = '<p>Henüz hiç değerlendirme bulunmamaktadır.</p>';
             }
             
-            alert('Değerlendirme başarıyla silindi.');
+            // Show feedback message with current count information
+            if (belowThreshold) {
+                alert(`Değerlendirme başarıyla silindi. \n\nDikkat: Toplam değerlendirme sayısı ${remainingCount} olarak güncellendi. \nGenel rapor için en az 5 değerlendirme gereklidir.`);
+            } else {
+                alert(`Değerlendirme başarıyla silindi. \nToplam değerlendirme sayısı: ${remainingCount}`);
+            }
             
         } catch (error) {
             console.error('Error:', error);

@@ -599,7 +599,27 @@ app.delete('/api/evaluations/:id', ensureAuthenticated, async (req, res) => {
     }
     
     if (deleted) {
-      res.status(200).json({ message: 'Değerlendirme silindi.' });
+      // Get current evaluations to update the report after deletion
+      let updatedEvaluations = [];
+      
+      // Get the updated evaluations list from appropriate source
+      if (mongoose.connection.readyState === 1) {
+        try {
+          updatedEvaluations = await Evaluation.find();
+        } catch (mongoError) {
+          console.error('MongoDB fetch after delete failed:', mongoError);
+          updatedEvaluations = JSON.parse(fs.readFileSync(evaluationsFile));
+        }
+      } else {
+        updatedEvaluations = JSON.parse(fs.readFileSync(evaluationsFile));
+      }
+      
+      // Return the number of remaining evaluations for frontend updates
+      res.status(200).json({ 
+        message: 'Değerlendirme silindi.', 
+        remainingCount: updatedEvaluations.length,
+        belowThreshold: updatedEvaluations.length < 5
+      });
     } else {
       res.status(404).json({ error: 'Değerlendirme bulunamadı.' });
     }
@@ -662,7 +682,11 @@ app.get('/api/report', ensureAuthenticated, async (req, res) => {
         saveReportToFileSystem(evaluations.length, newReport);
       }
       
-      res.json({ report: newReport, reportHistory: reports });
+      res.json({ 
+        report: newReport, 
+        reportHistory: reports,
+        evaluationCount: evaluations.length  // Öğrenci sayısını ekle
+      });
     } else {
       // Return the most recent report if exists, otherwise a placeholder
       const latestReport = reports.length > 0 
@@ -671,7 +695,11 @@ app.get('/api/report', ensureAuthenticated, async (req, res) => {
           ? `Henüz yeterli değerlendirme bulunmamaktadır. İlk rapor 5 öğrenci değerlendirmesinden sonra oluşturulacaktır. Şu ana kadar ${evaluations.length} değerlendirme yapılmıştır.` 
           : `Bir sonraki rapor ${5 - (evaluations.length - lastReportCount)} değerlendirme daha yapıldıktan sonra oluşturulacaktır.`;
       
-      res.json({ report: latestReport, reportHistory: reports });
+      res.json({ 
+        report: latestReport, 
+        reportHistory: reports,
+        evaluationCount: evaluations.length  // Öğrenci sayısını ekle
+      });
     }
   } catch (error) {
     console.error('Error generating report:', error);
