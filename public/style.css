@@ -324,8 +324,13 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .rating-value {
     font-weight: bold;
     color: var(--primary-color);
-    min-width: 25px;
+    min-width: 30px;
     text-align: center;
+    display: block;
+    margin: 10px auto 0;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .comments-section {
