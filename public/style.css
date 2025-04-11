@@ -742,6 +742,17 @@ button:hover {
     100% { transform: scale(1); }
 }
 
+.score-changed {
+    animation: score-update 1.5s ease;
+    color: #27ae60;
+}
+
+@keyframes score-update {
+    0% { transform: scale(1); background-color: rgba(39, 174, 96, 0.2); }
+    50% { transform: scale(1.15); background-color: rgba(39, 174, 96, 0.3); }
+    100% { transform: scale(1); background-color: transparent; }
+}
+
 .overall-score {
     background-color: var(--primary-color);
     color: white;

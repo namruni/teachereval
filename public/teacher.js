@@ -360,6 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
             const remainingCount = result.remainingCount;
             const belowThreshold = result.belowThreshold;
+            const updatedScore = result.updatedScore;
             
             // Update evaluation count display
             const evaluationCountElement = document.getElementById('evaluation-count');
@@ -371,6 +372,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     evaluationCountElement.classList.add('below-threshold');
                 } else {
                     evaluationCountElement.classList.remove('below-threshold');
+                }
+            }
+            
+            // Genel performans puanını güncelleyelim
+            const scoreDisplay = document.getElementById('overall-score-display');
+            if (scoreDisplay) {
+                // Eğer değerlendirme sayısı 0 ise veya 5'in altındaysa puan gösterme
+                if (remainingCount === 0 || belowThreshold) {
+                    scoreDisplay.textContent = '--';
+                } else {
+                    // Puanla ilgili görsel efekt ekleyelim
+                    scoreDisplay.textContent = updatedScore;
+                    
+                    // Puan değişti efekti
+                    scoreDisplay.classList.add('score-changed');
+                    setTimeout(() => {
+                        scoreDisplay.classList.remove('score-changed');
+                    }, 1500);
                 }
             }
             

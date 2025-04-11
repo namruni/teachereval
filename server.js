@@ -614,11 +614,48 @@ app.delete('/api/evaluations/:id', ensureAuthenticated, async (req, res) => {
         updatedEvaluations = JSON.parse(fs.readFileSync(evaluationsFile));
       }
       
-      // Return the number of remaining evaluations for frontend updates
+      // Hesapla yeni genel puanı (eğer en az 1 değerlendirme varsa)
+      let updatedScore = 0;
+      if (updatedEvaluations.length > 0) {
+        // Puan hesaplama
+        const avgScores = {
+          teaching: 0,
+          communication: 0,
+          knowledge: 0,
+          support: 0,
+          management: 0
+        };
+        
+        updatedEvaluations.forEach(eval => {
+          avgScores.teaching += eval.criteria.teaching;
+          avgScores.communication += eval.criteria.communication;
+          avgScores.knowledge += eval.criteria.knowledge;
+          avgScores.support += eval.criteria.support;
+          avgScores.management += eval.criteria.management;
+        });
+        
+        Object.keys(avgScores).forEach(key => {
+          avgScores[key] = (avgScores[key] / updatedEvaluations.length).toFixed(1);
+        });
+        
+        // Genel puanı hesapla (10 üzerinden ortalama -> 100 üzerinden puana çevirme)
+        const averageScore = (
+          parseFloat(avgScores.teaching) + 
+          parseFloat(avgScores.communication) + 
+          parseFloat(avgScores.knowledge) + 
+          parseFloat(avgScores.support) + 
+          parseFloat(avgScores.management)
+        ) / 5;
+        
+        updatedScore = Math.round(averageScore * 10);
+      }
+      
+      // Return the number of remaining evaluations and updated score for frontend updates
       res.status(200).json({ 
         message: 'Değerlendirme silindi.', 
         remainingCount: updatedEvaluations.length,
-        belowThreshold: updatedEvaluations.length < 5
+        belowThreshold: updatedEvaluations.length < 5,
+        updatedScore: updatedScore
       });
     } else {
       res.status(404).json({ error: 'Değerlendirme bulunamadı.' });
