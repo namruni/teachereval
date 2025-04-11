@@ -187,6 +187,16 @@ async function generateOverallReport(evaluations) {
     const totalEvaluations = evaluations.length;
     if (totalEvaluations === 0) return "Henüz değerlendirme bulunmamaktadır.";
     
+    // Check if we have at least 5 evaluations
+    if (totalEvaluations < 5) {
+      return `<div class="minimum-evaluations-warning">
+        <h3>Yetersiz Değerlendirme Sayısı</h3>
+        <p>Toplu değerlendirme raporu oluşturabilmek için en az 5 öğrenci değerlendirmesi gereklidir.</p>
+        <p>Şu anda sadece ${totalEvaluations} değerlendirme bulunmaktadır.</p>
+        <p>5 değerlendirmeye ulaşıldığında rapor otomatik olarak oluşturulacaktır.</p>
+      </div>`;
+    }
+    
     const avgScores = {
       teaching: 0,
       communication: 0,

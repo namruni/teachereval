@@ -49,6 +49,114 @@ header {
     overflow: hidden;
 }
 
+.logo-title-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.info-banner {
+    background: linear-gradient(135deg, #9c27b0, #3f51b5);
+    border: none;
+    padding: 15px 20px;
+    margin: 0 0 25px 0;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: bannerGlow 5s infinite alternate;
+}
+
+.info-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23ffffff12' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z'/%3E%3C/svg%3E");
+    opacity: 0.6;
+}
+
+.info-banner p {
+    margin: 0;
+    font-size: 18px;
+    color: white;
+    font-weight: 600;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    font-family: 'Quicksand', sans-serif;
+    letter-spacing: 0.5px;
+    position: relative;
+}
+
+@keyframes bannerGlow {
+    0% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); }
+    50% { box-shadow: 0 5px 25px rgba(156, 39, 176, 0.5), 0 0 20px rgba(63, 81, 181, 0.3); }
+    100% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); }
+}
+
+.minimum-evaluations-warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-left: 5px solid #e0a800;
+    color: #856404;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 90%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    animation: warning-pulse 2s infinite alternate;
+}
+
+.minimum-evaluations-warning h3 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #e0a800;
+}
+
+.minimum-evaluations-warning p {
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+@keyframes warning-pulse {
+    0% { box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); }
+    100% { box-shadow: 0 3px 12px rgba(224, 168, 0, 0.4); }
+}
+
+.school-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.school-logo:hover {
+    transform: scale(1.1);
+}
+
+.school-logo-login {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    display: block;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.school-logo-login:hover {
+    transform: scale(1.1);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 header::before {
     content: '';
     position: absolute;
@@ -253,7 +361,7 @@ textarea {
     transition: all 0.3s ease;
     font-size: 16px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    background-color: #fcfcfc;
+    background-color: rgba(252, 252, 252, 0.7);
 }
 
 textarea:focus {
@@ -261,6 +369,12 @@ textarea:focus {
     outline: none;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transform: translateY(-2px);
+}
+
+textarea::placeholder {
+    color: rgba(150, 150, 150, 0.5);
+    font-style: italic;
+    font-size: 14px;
 }
 
 textarea:focus {

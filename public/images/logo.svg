@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 560">
+  <!-- Turkuaz daire arkaplan -->
+  <circle cx="250" cy="250" r="240" fill="#8DF2E7" stroke="#8DF2E7" stroke-width="5"/>
+  
+  <!-- Yıldız -->
+  <path d="M250,60 L307,190 L450,190 L335,275 L380,405 L250,340 L120,405 L165,275 L50,190 L193,190 Z" fill="none" />
+  
+  <!-- Yıldızın sol yarısı (kırmızı) -->
+  <path d="M250,60 L193,190 L50,190 L165,275 L120,405 L250,340 L250,60 Z" fill="#D93025" stroke="#D93025" stroke-width="1" />
+  
+  <!-- Yıldızın sağ yarısı (beyaz) -->
+  <path d="M250,60 L307,190 L450,190 L335,275 L380,405 L250,340 L250,60 Z" fill="white" stroke="white" stroke-width="1" />
+  
+  <!-- ARGEM yazısı -->
+  <text x="250" y="520" font-family="Arial, sans-serif" font-size="70" font-weight="bold" text-anchor="middle" fill="black">ARGEM</text>
+</svg>

@@ -9,9 +9,16 @@
 <body>
     <div class="container">
         <header>
-            <h1>✨ Öğretmen Değerlendirme Formu ✨</h1>
+            <div class="logo-title-container">
+                <img src="/images/logo.svg" alt="ARGEM Logo" class="school-logo">
+                <h1>✨ Öğretmen Değerlendirme Formu ✨</h1>
+            </div>
             <a href="/teacher" class="teacher-btn">👨‍🏫 Öğretmen Girişi</a>
         </header>
+        
+        <div class="info-banner">
+            <p>Yapay Zeka Öğretmeni Mustafa Özdemir için oluşturuldu</p>
+        </div>
 
         <div class="criteria-container">
             <h2>🌟 Değerlendirme Kriterleri 🌟</h2>
@@ -20,7 +27,7 @@
             <form id="evaluation-form">
                 <div class="criteria">
                     <div class="criteria-item">
-                        <label for="teaching">📚 Ders Anlatım Kalitesi:</label>
+                        <label for="teaching">📚 Ders Anlatım Becerisi ve Konu Hakimiyeti:</label>
                         <div class="rating-container">
                             <div class="emoji-scale">
                                 <span class="emoji-bad">😕</span>
@@ -32,7 +39,7 @@
                     </div>
                     
                     <div class="criteria-item">
-                        <label for="communication">🗣️ İletişim Becerisi:</label>
+                        <label for="communication">🗣️ Öğrenciyle Etkileşim ve İletişim:</label>
                         <div class="rating-container">
                             <div class="emoji-scale">
                                 <span class="emoji-bad">🙊</span>
@@ -44,7 +51,7 @@
                     </div>
                     
                     <div class="criteria-item">
-                        <label for="knowledge">🧠 Alan Bilgisi:</label>
+                        <label for="knowledge">🧠 Ölçme ve Değerlendirme Adaleti:</label>
                         <div class="rating-container">
                             <div class="emoji-scale">
                                 <span class="emoji-bad">🤔</span>
@@ -56,7 +63,7 @@
                     </div>
                     
                     <div class="criteria-item">
-                        <label for="support">🤝 Öğrenci Desteği:</label>
+                        <label for="support">🤝 Sınıf Yönetimi ve Disiplin Sağlama:</label>
                         <div class="rating-container">
                             <div class="emoji-scale">
                                 <span class="emoji-bad">👎</span>
@@ -68,7 +75,7 @@
                     </div>
                     
                     <div class="criteria-item">
-                        <label for="management">👨‍👩‍👧‍👦 Sınıf Yönetimi:</label>
+                        <label for="management">👨‍👩‍👧‍👦 "İlham Veren" Öğretmen Olma:</label>
                         <div class="rating-container">
                             <div class="emoji-scale">
                                 <span class="emoji-bad">🙈</span>
@@ -82,8 +89,8 @@
                 
                 <div class="comments-section">
                     <label for="comments">Duygusal Görüş ve Düşünceleriniz:</label>
-                    <p class="comment-guidance">Lütfen öğretmeniniz hakkındaki duygusal düşüncelerinizi, kişisel deneyimlerinizi ve yukarıdaki kriterlerde ölçülmeyen gözlemlerinizi buraya yazınız. Öğretmeninizin sizi nasıl hissettirdiği, sınıfta oluşturduğu atmosfer ve sizinle olan iletişimi hakkındaki detaylı düşünceleriniz çok değerlidir.</p>
-                    <textarea id="comments" name="comments" rows="5" placeholder="Örneğin: 'Öğretmenimiz bizlere her zaman değerli olduğumuzu hissettiriyor, sınıfta kendimi rahat hissediyorum...', 'Dersler sırasında kendimi ifade etmekte zorlanıyorum çünkü...' vs."></textarea>
+                    <p class="comment-guidance">Lütfen öğretmeniniz hakkındaki görüş ve düşüncelerinizi kısaca buraya yazınız. Olumlu veya geliştirilmesi gereken yönler hakkındaki samimi görüşleriniz bizim için değerlidir.</p>
+                    <textarea id="comments" name="comments" rows="5" placeholder="Buraya yazın... Örn: Sınıf ortamı, iletişim tarzı, motivasyon sağlama, konuya hakimiyet vb. hakkındaki gözlemleriniz."></textarea>
                 </div>
                 
                 <button type="submit" id="submit-btn">✅ Değerlendirmeyi Gönder 🚀</button>
