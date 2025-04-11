@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Öğretmen Değerlendirme Paneli</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Öğretmen Değerlendirme Paneli</h1>
+            <a href="/" class="teacher-btn">Öğrenci Sayfasına Dön</a>
+        </header>
+
+        <div class="tab-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="overall-report">Genel Rapor</div>
+                <div class="tab" data-tab="evaluations">Tüm Değerlendirmeler</div>
+            </div>
+        </div>
+
+        <div class="teacher-container tab-content active" id="overall-report">
+            <div class="dashboard-header">
+                <h2>Genel Değerlendirme Raporu</h2>
+                <div class="overall-score">
+                    <span>Genel Performans Puanı</span>
+                    <span class="score-number" id="overall-score-display">--</span>
+                    <span>/ 100</span>
+                </div>
+            </div>
+            
+            <div id="criteria-reminder">
+                <h3>Değerlendirme Kriterleri</h3>
+                <ul>
+                    <li><strong>Ders Anlatım Kalitesi:</strong> Öğretmenin dersi açık ve anlaşılır şekilde anlatma yeteneği</li>
+                    <li><strong>İletişim Becerisi:</strong> Öğrencilerle etkili iletişim kurabilme</li>
+                    <li><strong>Alan Bilgisi:</strong> Öğretmenin konu alanındaki bilgi seviyesi</li>
+                    <li><strong>Öğrenci Desteği:</strong> Öğrencilere yardımcı olma ve destek sağlama</li>
+                    <li><strong>Sınıf Yönetimi:</strong> Sınıfı kontrol etme ve verimli bir öğrenme ortamı oluşturma</li>
+                </ul>
+            </div>
+            
+            <div class="report-container" id="overall-report-content">
+                <div class="loading-text"><div class="spinner"></div>Gemini rapor oluşturuyor...</div>
+            </div>
+        </div>
+        
+        <div class="teacher-container tab-content" id="evaluations">
+            <h2>Tüm Öğrenci Değerlendirmeleri</h2>
+            
+            <div class="evaluation-list" id="evaluation-list">
+                <div class="loading-text"><div class="spinner"></div>Değerlendirmeler yükleniyor...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="teacher.js"></script>
+</body>
+</html>

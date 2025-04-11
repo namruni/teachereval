@@ -1,0 +1,28 @@
+# Dependency directories
+node_modules/
+
+# Environment variables
+.env
+
+# Data files with sensitive information
+data/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Mac files
+.DS_Store
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo

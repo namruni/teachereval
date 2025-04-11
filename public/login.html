@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Öğretmen Girişi</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>Öğretmen Değerlendirme Sistemi</h1>
+                <h2>Öğretmen Girişi</h2>
+            </div>
+            
+            <div class="login-info">
+                <p>Öğretmen paneline erişim için giriş bilgilerinizi kullanmanız gerekmektedir.</p>
+                <p>Sadece yetkili öğretmenlerin erişimine izin verilmektedir.</p>
+            </div>
+            
+            <div id="login-error" class="login-error" style="display: none;">
+                Hatalı kullanıcı adı veya şifre
+            </div>
+            
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="email">E-posta</label>
+                    <input type="email" id="email" name="email" required placeholder="Örn: fakimozdemir@gmail.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Şifre</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="login-submit">Giriş Yap</button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Eğer erişim problemi yaşıyorsanız lütfen sistem yöneticisi ile iletişime geçin.</p>
+                <p><a href="/" class="back-link">Öğrenci sayfasına dön</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/teacher.html';
+                } else {
+                    document.getElementById('login-error').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('login-error').style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
