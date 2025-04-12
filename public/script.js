@@ -3,6 +3,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const successMessage = document.getElementById('success-message');
     const ratingInputs = document.querySelectorAll('input[type="range"]');
     
+    // Sürgüler hareket ettirildiğinde puan değerlerini güncelleyen kod
+    ratingInputs.forEach(input => {
+        // Değerleri başlangıçta güncelle
+        updateRatingValue(input);
+        
+        // Sürgü hareket ettirildiğinde güncelle
+        input.addEventListener('input', () => {
+            updateRatingValue(input);
+        });
+    });
+    
+    // Puan değerlerini güncelleyen fonksiyon
+    function updateRatingValue(input) {
+        const ratingValueElement = input.closest('.rating-container').querySelector('.rating-value');
+        ratingValueElement.textContent = input.value;
+    }
+    
     // Confetti effect for success message
     function showConfetti() {
         for (let i = 0; i < 150; i++) {
